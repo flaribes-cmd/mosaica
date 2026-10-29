@@ -1,0 +1,768 @@
+<title>Questionário de Perfil</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ground:#F3F0EA; --surface:#FCFBF8; --surface-2:#E9E4DA;
+  --line:#CFC7B9; --line-soft:#E1DBD0;
+  --text:#201D18; --text-2:#5D564B; --text-3:#8B8377;
+  --ink:#2B2721; --on-ink:#FBFAF7;
+  --p-d:#B0392F; --m-jung:#6A4C93; --m-gard:#1F7A7A; --m-belb:#A8562A;
+  --m-schw:#7A3E62; --m-arq:#5C6A22; --m-big:#1D5E6B;
+  --ok:#37734F; --warn:#A5750F; --alert:#B0392F;
+  --wash:rgba(32,29,24,.05); --r:7px;
+  --display:"Zilla Slab",Georgia,serif;
+  --sans:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#1A1815; --surface:#23201B; --surface-2:#2E2A24;
+  --line:#464038; --line-soft:#332F28;
+  --text:#F1EEE8; --text-2:#ADA698; --text-3:#847C70;
+  --ink:#F1EEE8; --on-ink:#1A1815;
+  --p-d:#E8786A; --m-jung:#B79BE0; --m-gard:#5FC4C4; --m-belb:#E09A6A;
+  --m-schw:#D68FBA; --m-arq:#B9C97A; --m-big:#63BACB;
+  --ok:#6CB98A; --warn:#D9A73C; --alert:#E8786A;
+  --wash:rgba(241,238,232,.055);
+}}
+:root[data-theme="dark"]{
+  --ground:#1A1815; --surface:#23201B; --surface-2:#2E2A24;
+  --line:#464038; --line-soft:#332F28;
+  --text:#F1EEE8; --text-2:#ADA698; --text-3:#847C70;
+  --ink:#F1EEE8; --on-ink:#1A1815;
+  --p-d:#E8786A; --m-jung:#B79BE0; --m-gard:#5FC4C4; --m-belb:#E09A6A;
+  --m-schw:#D68FBA; --m-arq:#B9C97A; --m-big:#63BACB;
+  --ok:#6CB98A; --warn:#D9A73C; --alert:#E8786A;
+  --wash:rgba(241,238,232,.055);
+}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);
+  font-size:16.5px;line-height:1.66;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:clamp(16px,3vw,34px) clamp(16px,5vw,34px) 64px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,6vw,3rem);line-height:1.04;
+  letter-spacing:-.02em;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(1.3rem,3.4vw,1.75rem);
+  line-height:1.15;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h3{font-weight:600;font-size:1rem;margin:0}
+p{margin:0}
+.lead{font-size:1.05rem;color:var(--text-2);max-width:56ch}
+.eyebrow{font-size:.8rem;font-weight:500;color:var(--text-3);margin:0}
+.stack{display:flex;flex-direction:column}
+.g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g24{gap:24px}.g32{gap:32px}
+.masthead{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;
+  align-items:baseline;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.masthead strong{font-family:var(--mono);font-size:10.5px;font-weight:500;
+  letter-spacing:.17em;text-transform:uppercase}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;
+  border-radius:var(--r);background:var(--ink);color:var(--on-ink);font-weight:600;
+  font-size:.95rem;transition:filter .15s,transform .12s}
+.btn:hover{filter:brightness(1.3)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.38;cursor:not-allowed}
+.btn-ghost{background:none;color:var(--text-2);border:1px solid var(--line);font-weight:500}
+.btn-ghost:hover{background:var(--surface);color:var(--text);filter:none}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input[type="text"]{font:inherit;padding:12px 14px;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--surface);color:var(--text);width:100%;min-width:0}
+input[type="text"]::placeholder{color:var(--text-3)}
+.note{border-left:3px solid var(--line);padding:1px 0 1px 15px;color:var(--text-2);
+  font-size:.89rem;max-width:62ch}
+.note strong{color:var(--text);font-weight:600}
+.note.ok{border-color:var(--ok)}.note.warn{border-color:var(--warn)}.note.alert{border-color:var(--alert)}
+
+/* ---------- módulos ---------- */
+.mods{display:grid;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);
+  border-radius:var(--r);overflow:hidden}
+.mod{background:var(--surface);display:grid;grid-template-columns:auto 1fr auto;gap:14px;
+  align-items:center;padding:16px 18px;text-align:left;width:100%;
+  border-left:3px solid var(--p);transition:background .14s}
+.mod:hover{background:var(--surface-2)}
+.mod .idx{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+.mod .tit{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mod .tit b{font-weight:600;color:var(--p)}
+.mod .tit span{font-size:.84rem;color:var(--text-2)}
+.mod .st{display:flex;flex-direction:column;gap:5px;align-items:flex-end;flex-shrink:0}
+.mod .st .n{font-family:var(--mono);font-size:11px;color:var(--text-3);white-space:nowrap}
+.mini{width:70px;height:5px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.mini i{display:block;height:100%;background:var(--p);width:0;transition:width .5s}
+.mod[data-full="1"] .tit b::after{content:" ✓";color:var(--ok)}
+@media (max-width:520px){.mod{grid-template-columns:auto 1fr;gap:10px}
+  .mod .st{grid-column:2;align-items:flex-start}}
+
+/* ---------- questionário ---------- */
+.prog{display:flex;gap:2px;height:13px;align-items:end}
+.pt{flex:1;height:5px;background:var(--line);border-radius:99px;transition:height .18s,background .18s}
+.pt.done{height:9px;background:var(--p)}
+.pt.now{height:13px;background:var(--text)}
+.stem{font-family:var(--display);font-weight:500;font-size:clamp(1.45rem,4.6vw,2.2rem);
+  line-height:1.2;letter-spacing:-.01em;margin:0;min-height:2.6em;display:flex;align-items:center}
+@media (max-width:620px){.stem{min-height:0}}
+.fade{animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.anchors{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-3);margin-bottom:8px}
+.likert{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.opt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 7px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+  transition:border-color .14s,background .14s,transform .12s}
+.opt:hover{border-color:var(--text);transform:translateY(-2px)}
+.opt .k{font-family:var(--mono);font-size:1.25rem;color:var(--text-3);line-height:1}
+.opt .l{font-size:.77rem;color:var(--text-2);text-align:center;line-height:1.28}
+.opt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+.opt[aria-pressed="true"] .k,.opt[aria-pressed="true"] .l{color:var(--on-ink)}
+@media (max-width:620px){.likert{grid-template-columns:1fr;gap:7px}
+  .opt{flex-direction:row;justify-content:flex-start;gap:14px;padding:13px 16px}
+  .opt .l{text-align:left}}
+.hint{font-size:.8rem;color:var(--text-3)}
+
+/* ---------- fim ---------- */
+.codigo{background:var(--surface);border:2px solid var(--ok);border-radius:var(--r);
+  padding:clamp(16px,3vw,22px);display:flex;flex-direction:column;gap:12px}
+.codigo .cod{font-family:var(--mono);font-size:13px;line-height:1.6;word-break:break-all;
+  background:var(--ground);padding:13px;border-radius:var(--r);border:1px solid var(--line-soft);
+  -webkit-user-select:all;user-select:all}
+.passos{counter-reset:p;display:flex;flex-direction:column;gap:13px;margin:4px 0}
+.passo{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.passo .n{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--on-ink);
+  display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:500}
+.passo .c{font-size:.93rem;color:var(--text-2)}
+.passo .c b{color:var(--text);font-weight:600;display:block;margin-bottom:2px;font-size:.98rem}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;
+  padding:14px;z-index:40}
+.modal-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  max-width:620px;width:100%;max-height:90vh;overflow:auto;padding:clamp(17px,3vw,25px);
+  display:flex;flex-direction:column;gap:13px}
+.modal-box h3{font-family:var(--display);font-size:1.3rem;font-weight:600}
+.modal-box textarea{font-family:var(--mono);font-size:13px;line-height:1.6;width:100%;
+  min-height:110px;padding:12px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--ground);color:var(--text);resize:vertical;word-break:break-all}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(90px);
+  background:var(--ink);color:var(--on-ink);padding:12px 20px;border-radius:var(--r);
+  font-size:.88rem;font-weight:500;transition:transform .3s cubic-bezier(.2,.9,.3,1);z-index:50}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:.79rem;color:var(--text-3);max-width:66ch}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+</style>
+
+<div class="wrap">
+  <div class="masthead">
+    <strong>Questionário de perfil</strong>
+    <p class="eyebrow" id="mast">&nbsp;</p>
+  </div>
+
+  <!-- ============ INÍCIO ============ -->
+  <section id="v-intro">
+    <div class="stack g32" style="padding:clamp(24px,5vw,44px) 0">
+      <div class="stack g20">
+        <h1>Sete instrumentos,<br>um retrato seu.</h1>
+        <p class="lead">São <strong id="n-itens">168</strong> afirmações sobre como você trabalha.
+          Leva cerca de 35 minutos. Não é prova, não tem resposta certa e não existe perfil melhor
+          ou pior — existe o seu.</p>
+      </div>
+
+      <div class="stack g12" style="max-width:380px">
+        <label class="eyebrow" for="nome">Seu nome</label>
+        <input type="text" id="nome" placeholder="Como você quer ser identificado" autocomplete="name">
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" id="b-start">Começar</button>
+        <button class="btn btn-ghost" id="b-retomar">Já respondi antes</button>
+      </div>
+
+      <div class="stack g16">
+        <h2>Antes de começar</h2>
+        <p class="note"><strong>Responda como você é, não como acha que deveria ser.</strong>
+          O retrato só serve se for seu. Se alguma afirmação não tiver nada a ver com você, marque
+          o 1 sem medo.</p>
+        <p class="note"><strong>Use toda a escala.</strong> Se você marcar 4 em quase tudo, o
+          resultado não consegue distinguir o que é forte do que é fraco em você, e o retrato
+          fica genérico. Discorde quando discordar.</p>
+        <p class="note"><strong>Dá para parar no meio.</strong> O progresso fica salvo neste
+          navegador. Só não troque de aparelho no meio do caminho, porque aí as respostas ficam
+          para trás.</p>
+        <p class="note"><strong>No fim sai um código.</strong> É ele que você envia para quem
+          convidou você. O relatório é montado a partir dele, e você recebe numa conversa —
+          não aqui nesta tela.</p>
+      </div>
+
+      <div class="stack g16">
+        <h2>O que este questionário não é</h2>
+        <p class="note">Não é avaliação de desempenho, não é teste psicológico e não é diagnóstico
+          de nada. Não mede inteligência nem competência técnica. É um instrumento de
+          autoconhecimento para conversa de desenvolvimento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MÓDULOS ============ -->
+  <section id="v-mods" hidden>
+    <div class="stack g24" style="padding:clamp(22px,4vw,36px) 0 0">
+      <div class="stack g12">
+        <h1>Os sete blocos</h1>
+        <p class="lead" id="mods-sub">Responda na ordem que preferir, ou siga em sequência.</p>
+      </div>
+      <div class="mods" id="mods"></div>
+      <div class="btn-row">
+        <button class="btn" id="b-seq">Continuar respondendo</button>
+        <button class="btn" id="b-fim" hidden>Gerar meu código</button>
+        <button class="btn btn-ghost" id="b-home">&larr; Início</button>
+      </div>
+      <p class="note" id="mods-nota"></p>
+    </div>
+  </section>
+
+  <!-- ============ QUESTIONÁRIO ============ -->
+  <section id="v-quiz" hidden>
+    <div style="padding:clamp(18px,3.4vw,32px) 0 0">
+      <div class="btn-row" style="justify-content:space-between;margin-bottom:9px">
+        <p class="eyebrow" id="q-mod">&nbsp;</p>
+        <p class="eyebrow" id="q-left">&nbsp;</p>
+      </div>
+      <div class="prog" id="prog"></div>
+      <div class="stack g20" style="padding-top:clamp(24px,4.6vw,40px)">
+        <h2 class="stem" id="stem">&nbsp;</h2>
+        <div>
+          <div class="anchors"><span>Discordo</span><span>Concordo</span></div>
+          <div class="likert" id="likert"></div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row" style="justify-content:space-between;padding-top:22px">
+      <button class="btn btn-ghost" id="b-prev">&larr; Anterior</button>
+      <span class="hint" id="dica">teclas 1 a 5 respondem</span>
+      <button class="btn" id="b-next">Próxima &rarr;</button>
+    </div>
+    <div class="btn-row" style="padding-top:18px">
+      <button class="btn btn-ghost" id="b-sair">Salvar e ver os blocos</button>
+    </div>
+  </section>
+
+  <!-- ============ FIM ============ -->
+  <section id="v-fim" hidden>
+    <div class="stack g24" style="padding:clamp(24px,4.6vw,42px) 0 0">
+      <div class="stack g12">
+        <p class="eyebrow" id="fim-meta">&nbsp;</p>
+        <h1 id="fim-titulo">Pronto.</h1>
+        <p class="lead">Você respondeu as <strong id="n-itens2">168</strong> afirmações. Agora é só
+          enviar o código abaixo para quem convidou você.</p>
+      </div>
+
+      <div class="codigo">
+        <p class="eyebrow">Seu código de resultado</p>
+        <div class="cod" id="cod">&nbsp;</div>
+        <div class="btn-row">
+          <button class="btn" id="b-enviar">Enviar código</button>
+          <button class="btn btn-ghost" id="b-copiar">Copiar</button>
+        </div>
+        <p class="note" id="cod-nota">O botão de enviar abre as opções do seu aparelho —
+          WhatsApp, e-mail, o que você preferir.</p>
+      </div>
+
+      <div class="stack g16">
+        <h2>O que acontece agora</h2>
+        <div class="passos" id="passos"></div>
+      </div>
+
+      <p class="note warn"><strong>Perdeu o código?</strong> Volte a abrir esta página no mesmo
+        aparelho e navegador: suas respostas continuam salvas e o código aparece de novo. Se você
+        limpar os dados do navegador, aí sim as respostas se perdem.</p>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="b-voltar">&larr; Rever minhas respostas</button>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer">Instrumentos de referência: Marston (DISC), Jung e Myers-Briggs (tipos),
+    Gardner (inteligências múltiplas), Belbin (papéis de equipe), Schwartz (valores),
+    Mark e Pearson (arquétipos), Costa e McCrae (Big Five). Bateria de autorrelato para
+    desenvolvimento; não é avaliação psicológica. Suas respostas ficam neste navegador e
+    viajam apenas no código que você enviar.</p>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* Os itens vêm da bateria completa, já na ordem final. A ordem não pode mudar:
+   o app de quem recebe o código depende dela para remontar o perfil. */
+var MODULOS = [{"id":"disc","nome":"Perfil comportamental","sub":"DISC · Executor, Comunicador, Planejador, Analista","cor":"var(--p-d)","itens":[{"t":"Gosto de assumir o controle em situações desafiadoras.","d":"D"},{"t":"Gosto de interagir com as pessoas e compartilhar ideias.","d":"I"},{"t":"Prefiro ambientes estáveis e rotinas bem estruturadas.","d":"S"},{"t":"Prezo por seguir regras e padrões estabelecidos.","d":"C"},{"t":"Prefiro focar em resultados rápidos, mesmo que envolvam riscos.","d":"D"},{"t":"Tenho facilidade em persuadir e motivar outras pessoas.","d":"I"},{"t":"Gosto de apoiar os outros para alcançar objetivos comuns.","d":"S"},{"t":"Tenho atenção aos detalhes e busco precisão em minhas atividades.","d":"C"},{"t":"Sou direto(a) ao me comunicar e resolver problemas.","d":"D"},{"t":"Sou criativo(a) e vejo o lado positivo em situações adversas.","d":"I"},{"t":"Evito conflitos e prefiro manter a harmonia no trabalho.","d":"S"},{"t":"Analiso profundamente antes de tomar decisões importantes.","d":"C"},{"t":"Tenho facilidade em tomar decisões sob pressão.","d":"D"},{"t":"Valorizo relacionamentos e busco manter um ambiente amigável.","d":"I"},{"t":"Valorizo o trabalho em equipe e a colaboração.","d":"S"},{"t":"Valorizo a qualidade e o cumprimento de prazos.","d":"C"},{"t":"Sinto-me motivado(a) por alcançar metas ambiciosas.","d":"D"},{"t":"Gosto de estar no centro das atenções e inspirar os outros.","d":"I"},{"t":"Sou paciente e consigo lidar com processos longos.","d":"S"},{"t":"Sou metódico(a) e organizado(a) no trabalho.","d":"C"},{"t":"Prezo por eficiência e não gosto de perder tempo.","d":"D"},{"t":"Prefiro ambientes dinâmicos e cheios de energia.","d":"I"},{"t":"Sinto-me confortável ao seguir passos definidos para alcançar resultados.","d":"S"},{"t":"Prefiro tarefas que exijam lógica e raciocínio analítico.","d":"C"}]},{"id":"jung","nome":"Tipo psicológico","sub":"Quatro dicotomias junguianas, no formato do MBTI","cor":"var(--m-jung)","itens":[{"t":"Recarrego minhas energias convivendo com outras pessoas.","d":"E"},{"t":"Confio mais no que é concreto e comprovado do que em possibilidades.","d":"S"},{"t":"Ao decidir, coloco a lógica acima do impacto emocional.","d":"T"},{"t":"Me sinto mais tranquilo(a) quando as decisões já estão fechadas.","d":"J"},{"t":"Penso melhor falando em voz alta do que em silêncio.","d":"E"},{"t":"Presto atenção nos detalhes práticos e nos fatos de cada situação.","d":"S"},{"t":"Quando ser justo(a) e ser gentil se chocam, fico com ser justo(a).","d":"T"},{"t":"Faço listas e planos, e gosto de segui-los.","d":"J"},{"t":"Num evento cheio, gosto de circular e conhecer gente nova.","d":"E"},{"t":"Prefiro instruções passo a passo a orientações gerais.","d":"S"},{"t":"Recebo críticas diretas ao meu trabalho sem levar para o lado pessoal.","d":"T"},{"t":"Costumo entregar as coisas bem antes do prazo.","d":"J"},{"t":"Depois de um dia muito social, preciso de um tempo sozinho(a) para me recompor.","d":"I"},{"t":"Costumo enxergar padrões e significados por trás dos fatos.","d":"N"},{"t":"Ao decidir, penso primeiro em como aquilo afeta as pessoas envolvidas.","d":"F"},{"t":"Prefiro manter as opções em aberto o máximo de tempo possível.","d":"P"},{"t":"Prefiro amadurecer uma ideia por dentro antes de apresentá-la.","d":"I"},{"t":"Me interessa mais o que uma coisa pode vir a ser do que o que ela é hoje.","d":"N"},{"t":"Percebo rapidamente o clima emocional de um ambiente.","d":"F"},{"t":"Me adapto bem quando o plano muda no meio do caminho.","d":"P"},{"t":"Prefiro poucas conversas profundas a muitas conversas rápidas.","d":"I"},{"t":"Gosto de trabalhar com ideias abstratas, teorias e cenários.","d":"N"},{"t":"A harmonia do grupo é, para mim, um critério legítimo de decisão.","d":"F"},{"t":"Rendo mais quando o prazo está chegando.","d":"P"}]},{"id":"gardner","nome":"Inteligências múltiplas","sub":"Oito inteligências de Gardner","cor":"var(--m-gard)","itens":[{"t":"Escrevo com facilidade e gosto de escolher a palavra exata.","d":"ling"},{"t":"Gosto de problemas que exigem raciocínio lógico e números.","d":"logic"},{"t":"Consigo imaginar objetos girando e encaixando no espaço.","d":"espac"},{"t":"Aprendo melhor fazendo com as mãos do que lendo a respeito.","d":"corp"},{"t":"Percebo desafinação, ritmo e mudanças sutis de som.","d":"music"},{"t":"Percebo rápido o que a outra pessoa está sentindo.","d":"inter"},{"t":"Conheço bem meus próprios motivos, limites e reações.","d":"intra"},{"t":"Observo e reconheço plantas, animais e padrões da natureza.","d":"natur"},{"t":"Aprendo bem lendo e explicando o assunto para outra pessoa.","d":"ling"},{"t":"Procuro a relação de causa e efeito por trás dos fatos.","d":"logic"},{"t":"Entendo melhor uma ideia quando ela vira diagrama ou desenho.","d":"espac"},{"t":"Tenho boa coordenação e consciência do meu corpo.","d":"corp"},{"t":"Música tem forte efeito sobre o meu estado de ânimo.","d":"music"},{"t":"As pessoas me procuram para conversar sobre problemas delas.","d":"inter"},{"t":"Reservo tempo para refletir sobre minhas escolhas.","d":"intra"},{"t":"Me sinto restaurado(a) em ambientes naturais.","d":"natur"},{"t":"Percebo rapidamente ambiguidades e imprecisões num texto.","d":"ling"},{"t":"Me sinto confortável analisando dados e planilhas.","d":"logic"},{"t":"Tenho boa memória visual de lugares e trajetos.","d":"espac"},{"t":"Preciso me mover para pensar melhor.","d":"corp"},{"t":"Guardo melodias com facilidade depois de ouvi-las poucas vezes.","d":"music"},{"t":"Tenho facilidade em mediar conflitos entre pessoas.","d":"inter"},{"t":"Reconheço o que sinto antes que isso afete meu comportamento.","d":"intra"},{"t":"Percebo mudanças sutis no ambiente à minha volta.","d":"natur"}]},{"id":"belbin","nome":"Papéis de equipe","sub":"Nove papéis de Belbin","cor":"var(--m-belb)","itens":[{"t":"Costumo trazer a ideia fora do óbvio quando o grupo trava.","d":"criador"},{"t":"Trago para o grupo contatos e informações de fora.","d":"investig"},{"t":"Consigo esclarecer objetivos e distribuir bem o trabalho.","d":"coorden"},{"t":"Pressiono o grupo para sair da conversa e entrar na ação.","d":"impuls"},{"t":"Analiso friamente os prós e contras antes de o grupo decidir.","d":"avaliad"},{"t":"Percebo tensões no grupo e ajo para reduzi-las.","d":"coesor"},{"t":"Transformo a decisão do grupo em plano prático e cronograma.","d":"implem"},{"t":"Reviso o trabalho procurando erros que passaram.","d":"finaliz"},{"t":"Sou a referência técnica do time em um assunto específico.","d":"espec"},{"t":"Prefiro pensar em soluções novas a aperfeiçoar o que já existe.","d":"criador"},{"t":"Gosto de explorar oportunidades e sondar parceiros.","d":"investig"},{"t":"As pessoas costumam me deixar conduzir a reunião.","d":"coorden"},{"t":"Não me incomodo em confrontar quando o ritmo cai.","d":"impuls"},{"t":"Costumo ser o(a) que aponta a falha no plano entusiasmado.","d":"avaliad"},{"t":"Me disponho a ceder para manter o time funcionando.","d":"coesor"},{"t":"Sou disciplinado(a) e confiável na execução do combinado.","d":"implem"},{"t":"Me incomoda entregar algo com ponta solta.","d":"finaliz"},{"t":"Prefiro aprofundar minha especialidade a me espalhar.","d":"espec"},{"t":"Me distraio dos detalhes quando estou envolvido(a) numa ideia boa.","d":"criador"},{"t":"Meu entusiasmo inicial é alto, mas cai quando a novidade passa.","d":"investig"},{"t":"Sei reconhecer o talento de cada um e chamar quem é preciso.","d":"coorden"},{"t":"Trabalho melhor sob pressão e prazo curto.","d":"impuls"},{"t":"Julgo com imparcialidade, mesmo que a ideia seja minha.","d":"avaliad"},{"t":"Escuto quem está sendo menos ouvido na conversa.","d":"coesor"},{"t":"Prefiro método comprovado a experimento.","d":"implem"},{"t":"Cuido pessoalmente do prazo e do acabamento final.","d":"finaliz"},{"t":"Contribuo mais quando o problema é do meu domínio técnico.","d":"espec"}]},{"id":"schwartz","nome":"Valores","sub":"Dez valores humanos básicos de Schwartz","cor":"var(--m-schw)","itens":[{"t":"É importante para mim decidir por conta própria o rumo da minha vida.","d":"autodet"},{"t":"Preciso de novidade e desafio para não me sentir estagnado(a).","d":"estim"},{"t":"Dou valor a aproveitar a vida e ao prazer do dia a dia.","d":"hedon"},{"t":"É importante para mim demonstrar competência e ser reconhecido(a) por isso.","d":"realiz"},{"t":"Valorizo ter influência sobre decisões e pessoas.","d":"poder"},{"t":"Estabilidade e previsibilidade são condições para eu ficar bem.","d":"segur"},{"t":"Procuro não fazer nada que os outros considerem inadequado.","d":"conform"},{"t":"Respeito costumes e tradições que recebi.","d":"tradic"},{"t":"Dedico tempo ao bem-estar das pessoas do meu convívio.","d":"benev"},{"t":"Me importo com justiça social e com quem não conheço pessoalmente.","d":"univer"},{"t":"Valorizo poder pensar diferente e escolher meu próprio caminho.","d":"autodet"},{"t":"Busco experiências intensas, mesmo com algum risco.","d":"estim"},{"t":"Busco ativamente o que me dá satisfação e bem-estar.","d":"hedon"},{"t":"Me esforço para ter sucesso segundo padrões exigentes.","d":"realiz"},{"t":"Ter status e recursos é importante para mim.","d":"poder"},{"t":"Me importo com segurança, minha e das pessoas próximas.","d":"segur"},{"t":"Cumprir regras e obrigações é importante para mim, mesmo sem fiscalização.","d":"conform"},{"t":"Valorizo a modéstia e não gosto de chamar atenção para mim.","d":"tradic"},{"t":"Ser leal e confiável com quem é próximo é central para mim.","d":"benev"},{"t":"Proteger o meio ambiente é um valor importante para mim.","d":"univer"}]},{"id":"arquetipos","nome":"Arquétipos","sub":"Os doze arquétipos de Mark e Pearson","cor":"var(--m-arq)","itens":[{"t":"Prefiro acreditar na boa intenção das pessoas até prova em contrário.","d":"inocente"},{"t":"Preciso de liberdade para seguir caminhos que ninguém percorreu.","d":"explorador"},{"t":"Antes de agir, quero entender a fundo como as coisas funcionam.","d":"sabio"},{"t":"Me realizo enfrentando desafios que os outros consideram difíceis demais.","d":"heroi"},{"t":"Questiono regras que existem só porque sempre existiram.","d":"foradalei"},{"t":"Gosto de provocar transformações profundas em pessoas ou situações.","d":"mago"},{"t":"Faço questão de ser tratado(a) como igual, sem privilégio nem destaque.","d":"caracomum"},{"t":"Dou muito valor a vínculos próximos e à qualidade das relações.","d":"amante"},{"t":"Uso o humor para aliviar a tensão de um ambiente pesado.","d":"bobo"},{"t":"Preciso materializar em algo concreto aquilo que imagino.","d":"criador"},{"t":"Coloco a necessidade de quem depende de mim antes da minha.","d":"cuidador"},{"t":"Assumo naturalmente a responsabilidade por manter a ordem no que é meu.","d":"governante"},{"t":"Busco simplicidade e otimismo, mesmo quando o cenário é difícil.","d":"inocente"},{"t":"Me sinto sufocado(a) quando a rotina não deixa espaço para o novo.","d":"explorador"},{"t":"Confio mais no conhecimento verificado do que na opinião de quem tem autoridade.","d":"sabio"},{"t":"Quando algo importante está em risco, assumo a linha de frente.","d":"heroi"},{"t":"Não me incomoda desagradar se for para mudar algo que está errado.","d":"foradalei"},{"t":"Enxergo conexões que permitem mudar o jogo, e não apenas jogar melhor.","d":"mago"},{"t":"Me sinto bem em ambientes onde ninguém precisa se provar.","d":"caracomum"},{"t":"Cuido da beleza e do prazer daquilo que faço, não só da função.","d":"amante"},{"t":"Levo a vida com leveza, mesmo em contextos sérios.","d":"bobo"},{"t":"Me incomoda entregar algo apenas correto, sem nada de original.","d":"criador"},{"t":"Me sinto útil quando estou cuidando ou protegendo alguém.","d":"cuidador"},{"t":"Me incomoda ver um grupo sem alguém que responda pelo conjunto.","d":"governante"}]},{"id":"bigfive","nome":"Traços de personalidade","sub":"Os cinco grandes fatores (Big Five / OCEAN)","cor":"var(--m-big)","itens":[{"t":"Gosto de ideias novas, mesmo quando mexem com o que já funciona.","d":"abertura"},{"t":"Cumpro o que combino, mesmo quando ninguém está cobrando.","d":"conscienciosidade"},{"t":"Começo conversa com facilidade, inclusive com quem não conheço.","d":"extroversao"},{"t":"Me importo de verdade com como as pessoas ao meu redor estão.","d":"amabilidade"},{"t":"Mantenho a calma quando as coisas dão errado.","d":"estabilidade"},{"t":"Tenho curiosidade por assuntos fora da minha área.","d":"abertura"},{"t":"Mantenho meus prazos e minhas coisas organizados.","d":"conscienciosidade"},{"t":"Me sinto à vontade quando a atenção do grupo está em mim.","d":"extroversao"},{"t":"Dou o benefício da dúvida antes de julgar alguém.","d":"amabilidade"},{"t":"Preocupações ficam girando na minha cabeça por muito tempo.","d":"estabilidade","i":1},{"t":"Prefiro o que já é conhecido e testado a experimentar algo diferente.","d":"abertura","i":1},{"t":"Costumo deixar tarefas pela metade.","d":"conscienciosidade","i":1},{"t":"Num grupo grande, prefiro ficar em segundo plano.","d":"extroversao","i":1},{"t":"Quando discordo, vou direto ao ponto mesmo que magoe.","d":"amabilidade","i":1},{"t":"Uma crítica me desestabiliza por um bom tempo.","d":"estabilidade","i":1},{"t":"Gosto de pensar em conceitos abstratos e em como as coisas poderiam ser.","d":"abertura"},{"t":"Planejo antes de começar, em vez de ir resolvendo no caminho.","d":"conscienciosidade"},{"t":"Conviver com gente me dá energia.","d":"extroversao"},{"t":"Abro mão de ganhar uma discussão para não desgastar a relação.","d":"amabilidade"},{"t":"Lido bem com imprevisto e com pressão de prazo.","d":"estabilidade"},{"t":"Me interesso por arte, cultura ou formas diferentes de ver o mundo.","d":"abertura"},{"t":"Reviso o que faço antes de entregar.","d":"conscienciosidade"},{"t":"Falo o que penso na hora, sem ensaiar muito.","d":"extroversao"},{"t":"Tenho facilidade em relevar quando alguém erra comigo.","d":"amabilidade"},{"t":"Meu humor oscila bastante ao longo de um dia de trabalho.","d":"estabilidade","i":1}]}].map(function(m){
+  return {id:m.id, nome:m.nome, sub:m.sub, cor:m.cor,
+    itens: m.itens.map(function(it){
+      var o = {texto:it.t};
+      if(m.id === "jung") o.polo = it.d; else o.dim = it.d;
+      if(it.i) o.inv = 1;
+      return o;
+    })};
+});
+var TOTAL = MODULOS.reduce(function(a,m){ return a + m.itens.length; }, 0);
+var LAYOUTS = [
+  {total:TOTAL, modulos:MODULOS.map(function(m){ return m.id; })},
+  {total:143, modulos:["disc","jung","gardner","belbin","schwartz","arquetipos"]}
+];
+var ESCALA = ["Discordo totalmente","Discordo","Neutro","Concordo","Concordo totalmente"];
+
+/* ---------- estado ---------- */
+var K_RESP = "misapin.resp.v2";
+var resp = {}, nomeAtual = "", modAtual = null, idx = 0, sequencial = false;
+MODULOS.forEach(function(m){ resp[m.id] = new Array(m.itens.length).fill(0); });
+
+function guard(f,d){ try{ return f(); }catch(e){ return d; } }
+function salvar(){ guard(function(){
+  localStorage.setItem(K_RESP, JSON.stringify({r:resp, n:nomeAtual})); }); }
+function carregar(){
+  var o = guard(function(){ return JSON.parse(localStorage.getItem(K_RESP)||"null"); }, null);
+  if(!o || !o.r) return false;
+  var achou = false;
+  MODULOS.forEach(function(m){
+    var a = o.r[m.id];
+    if(Array.isArray(a) && a.length === m.itens.length){
+      resp[m.id] = a.slice(); if(a.some(Boolean)) achou = true;
+    }
+  });
+  if(o.n) nomeAtual = o.n;
+  return achou;
+}
+
+var $ = function(i){ return document.getElementById(i); };
+function el(t,c,x){ var n=document.createElement(t); if(c) n.className=c; if(x!=null) n.textContent=x; return n; }
+function pad2(n){ return (n<10?"0":"")+n; }
+function toast(m){ var t=$("toast"); t.textContent=m; t.classList.add("up");
+  clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove("up"); },2600); }
+function feitas(id){ return resp[id].filter(Boolean).length; }
+function completo(id){ return feitas(id) === resp[id].length; }
+function tudoCompleto(){ return MODULOS.every(function(m){ return completo(m.id); }); }
+function faltando(){ return MODULOS.filter(function(m){ return !completo(m.id); }); }
+function respostasEmTexto(){
+  return MODULOS.map(function(m){ return resp[m.id].join(""); }).join("");
+}
+
+/* ---------- escores (sem relatório, mas o contrato com o outro app depende deles) ---------- */
+function medias(id){
+  var m = MODULOS.filter(function(x){ return x.id===id; })[0];
+  var soma = {}, n = {};
+  m.itens.forEach(function(it,i){
+    var k = (id==="jung") ? it.polo : it.dim;
+    if(!(k in soma)){ soma[k]=0; n[k]=0; }
+    if(resp[id][i]){ soma[k] += it.inv ? (6 - resp[id][i]) : resp[id][i]; n[k]++; }
+  });
+  var out = {};
+  Object.keys(soma).forEach(function(k){ out[k] = n[k] ? soma[k]/n[k] : 0; });
+  return out;
+}
+function calcular(){
+  var o = {};
+  MODULOS.forEach(function(m){ o[m.id] = {med: medias(m.id)}; });
+  var bruto = {}, total = 0, pct = {};
+  var md = medias("disc");
+  ["D","I","S","C"].forEach(function(k){
+    bruto[k] = 0;
+    MODULOS[0].itens.forEach(function(it,i){ if(it.dim===k && resp.disc[i]) bruto[k] += resp.disc[i]; });
+    total += bruto[k];
+  });
+  ["D","I","S","C"].forEach(function(k){ pct[k] = total ? Math.round(bruto[k]/total*1000)/10 : 0; });
+  o.disc.pct = pct; o.disc.bruto = bruto;
+  var mj = medias("jung"), letras = "";
+  [["E","I"],["S","N"],["T","F"],["J","P"]].forEach(function(p){
+    letras += (mj[p[0]]||0) >= (mj[p[1]]||0) ? p[0] : p[1];
+  });
+  o.jung.letras = letras;
+  return o;
+}
+
+/* ---------- código ---------- */
+function b64url(bin){
+  var s = "";
+  for(var i=0;i<bin.length;i++) s += String.fromCharCode(bin[i]);
+  return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function deB64url(t){
+  t = t.replace(/-/g,"+").replace(/_/g,"/");
+  while(t.length % 4) t += "=";
+  var bin = atob(t), b = new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) b[i] = bin.charCodeAt(i);
+  return b;
+}
+function empacotar(r){
+  var b = [], i;
+  for(i=0;i<r.length;i+=3){
+    b.push(((+r.charAt(i)||1)-1)*25 + ((+r.charAt(i+1)||1)-1)*5 + ((+r.charAt(i+2)||1)-1));
+  }
+  return b64url(new Uint8Array(b));
+}
+function desempacotar(t, n){
+  var b = deB64url(t), o = "", i, v;
+  for(i=0;i<b.length;i++){
+    v = b[i];
+    o += String(Math.floor(v/25)+1) + String(Math.floor((v%25)/5)+1) + String((v%5)+1);
+  }
+  return o.slice(0, n);
+}
+function textoParaB64(t){ return b64url(new TextEncoder().encode(t)); }
+function b64ParaTexto(t){ return new TextDecoder().decode(deB64url(t)); }
+function somaVerif(r){
+  var h = 0x811C, i;
+  for(i=0;i<r.length;i++) h = ((h ^ r.charCodeAt(i)) * 0x0193) & 0xFFFF;
+  return b64url(new Uint8Array([h >> 8, h & 0xFF]));
+}
+var motivoCodigo = "";
+function codificar(nome){
+  var r = respostasEmTexto();
+  if(r.length !== TOTAL || /0/.test(r)) return null;
+  var d = new Date();
+  var data = "" + d.getFullYear() + pad2(d.getMonth()+1) + pad2(d.getDate());
+  return "MISAPIN2." + empacotar(r) + "." + textoParaB64((nome||"").slice(0,60)) +
+         "." + data + "." + somaVerif(r);
+}
+function decodificar(txt){
+  txt = (txt||"").trim();
+  motivoCodigo = "formato";
+  try{
+    var i = txt.indexOf("MISAPIN2.");
+    if(i < 0) return null;
+    var p = txt.slice(i).split(/[^A-Za-z0-9._-]/)[0].split(".");
+    if(p.length < 5){ motivoCodigo = "incompleto"; return null; }
+    var bruto = desempacotar(p[1], 9999), dt = p[3] || "";
+    for(var li=0; li<LAYOUTS.length; li++){
+      var L = LAYOUTS[li], r = bruto.slice(0, L.total);
+      if(r.length !== L.total || !/^[1-5]+$/.test(r)) continue;
+      if(p[4] !== somaVerif(r)) continue;
+      return {v:2, n: p[2] ? b64ParaTexto(p[2]) : "", r:r, layout:L,
+              parcial: L.total !== TOTAL,
+              d: /^\d{8}$/.test(dt) ? dt.slice(0,4)+"-"+dt.slice(4,6)+"-"+dt.slice(6) : ""};
+    }
+    motivoCodigo = bruto.length >= 100 ? "alterado" : "incompleto";
+    return null;
+  }catch(e){ return null; }
+}
+function aplicarRespostas(o){
+  var ids = (o.layout && o.layout.modulos) || MODULOS.map(function(m){ return m.id; });
+  MODULOS.forEach(function(m){ resp[m.id] = new Array(m.itens.length).fill(0); });
+  var pos = 0;
+  ids.forEach(function(id){
+    var m = MODULOS.filter(function(x){ return x.id===id; })[0];
+    if(!m) return;
+    resp[id] = o.r.slice(pos, pos + m.itens.length).split("").map(Number);
+    pos += m.itens.length;
+  });
+  nomeAtual = o.n || "";
+}
+
+/* ---------- entrega do texto ---------- */
+function entregar(txt, titulo){
+  var back = el("div","modal"), box = el("div","modal-box");
+  back.appendChild(box);
+  var topo = el("div");
+  topo.style.cssText = "display:flex;justify-content:space-between;align-items:baseline;gap:12px";
+  topo.appendChild(el("h3",null,titulo));
+  var fechar = el("button","btn-ghost","Fechar");
+  fechar.type="button"; fechar.style.cssText="padding:6px 13px;font-size:.82rem";
+  topo.appendChild(fechar); box.appendChild(topo);
+  var ta = document.createElement("textarea");
+  ta.value = txt; ta.setAttribute("spellcheck","false");
+  ta.setAttribute("autocapitalize","off"); ta.setAttribute("autocorrect","off");
+  box.appendChild(ta);
+  var linha = el("div","btn-row"), aviso = el("p","note");
+  function selecionar(){ try{ ta.focus(); ta.select(); ta.setSelectionRange(0, txt.length); }catch(e){} }
+  if(navigator.share){
+    var bs = el("button","btn","Compartilhar"); bs.type="button";
+    bs.addEventListener("click", function(){
+      navigator.share({title:titulo, text:txt}).catch(function(){ selecionar(); }); });
+    linha.appendChild(bs);
+  }
+  var bc = el("button", navigator.share ? "btn btn-ghost" : "btn", "Copiar");
+  bc.type="button";
+  bc.addEventListener("click", function(){
+    selecionar();
+    var ok = function(){ bc.textContent="Copiado ✓"; setTimeout(function(){ bc.textContent="Copiar"; },2200); };
+    var falhou = function(){
+      aviso.className="note warn";
+      aviso.textContent="Este navegador não deixa a página copiar sozinha. O texto já está "+
+        "selecionado acima: segure o dedo sobre ele (ou Ctrl+C no computador) e escolha Copiar."; };
+    var exec = function(){ try{ if(document.execCommand("copy")){ ok(); return true; } }catch(e){} return false; };
+    if(navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(txt).then(ok, function(){ if(!exec()) falhou(); });
+    else if(!exec()) falhou();
+  });
+  linha.appendChild(bc);
+  box.appendChild(linha);
+  aviso.textContent = navigator.share
+    ? "Se preferir, toque no texto acima para selecionar e copiar à mão."
+    : "Os botões podem ser bloqueados pelo navegador. O texto está selecionado: Ctrl+C no "+
+      "computador, ou segure o dedo sobre ele no celular.";
+  box.appendChild(aviso);
+  function sair(){ if(back.parentNode) back.parentNode.removeChild(back); document.removeEventListener("keydown",esc); }
+  function esc(e){ if(e.key==="Escape") sair(); }
+  fechar.addEventListener("click", sair);
+  back.addEventListener("click", function(e){ if(e.target===back) sair(); });
+  document.addEventListener("keydown", esc);
+  document.body.appendChild(back);
+  setTimeout(selecionar, 60);
+}
+
+/* ---------- telas ---------- */
+function trocar(id){
+  ["v-intro","v-mods","v-quiz","v-fim"].forEach(function(v){ $(v).hidden = (v!==id); });
+  window.scrollTo({top:0,behavior:"auto"});
+}
+function montarMods(){
+  var w = $("mods"); w.textContent = "";
+  MODULOS.forEach(function(m,i){
+    var f = feitas(m.id), n = m.itens.length;
+    var b = el("button","mod"); b.type="button";
+    b.style.setProperty("--p", m.cor);
+    b.setAttribute("data-full", f===n ? "1":"0");
+    b.appendChild(el("span","idx", pad2(i+1)));
+    var t = el("div","tit");
+    t.appendChild(el("b",null,m.nome));
+    t.appendChild(el("span",null,m.sub));
+    b.appendChild(t);
+    var st = el("div","st");
+    st.appendChild(el("span","n", f+" de "+n));
+    var mini = el("div","mini"), fill = el("i");
+    fill.style.width = (f/n*100)+"%";
+    mini.appendChild(fill); st.appendChild(mini);
+    b.appendChild(st);
+    b.addEventListener("click", function(){ abrirModulo(m.id, false); });
+    w.appendChild(b);
+  });
+  var fT = MODULOS.reduce(function(a,m){ return a+feitas(m.id); },0);
+  var pronto = tudoCompleto();
+  $("b-fim").hidden = !pronto;
+  $("b-seq").hidden = pronto;
+  $("mods-sub").textContent = pronto
+    ? "Tudo respondido. Pode gerar o seu código."
+    : "Responda na ordem que preferir, ou siga em sequência.";
+  $("mods-nota").textContent = fT + " de " + TOTAL + " respondidas" +
+    (pronto ? "." : ". Faltam " + (TOTAL - fT) + ".");
+}
+function modObj(){ return MODULOS.filter(function(m){ return m.id===modAtual; })[0]; }
+function montarLikert(){
+  var w = $("likert");
+  for(var i=1;i<=5;i++)(function(v){
+    var b = el("button","opt"); b.type="button";
+    b.setAttribute("aria-pressed","false");
+    b.appendChild(el("span","k",String(v)));
+    b.appendChild(el("span","l",ESCALA[v-1]));
+    b.addEventListener("click", function(){ responder(v); });
+    w.appendChild(b);
+  })(i);
+}
+function montarProg(){
+  var m = modObj(), w = $("prog"); w.textContent = "";
+  for(var i=0;i<m.itens.length;i++){
+    var t = el("div","pt"); t.style.setProperty("--p", m.cor); w.appendChild(t);
+  }
+}
+function pintarProg(){
+  var t = $("prog").children, a = resp[modAtual];
+  for(var i=0;i<t.length;i++){
+    var c = "pt"; if(a[i]) c+=" done"; if(i===idx) c+=" now";
+    t[i].className = c;
+  }
+}
+function renderItem(){
+  var m = modObj(), s = $("stem");
+  s.textContent = m.itens[idx].texto;
+  s.classList.remove("fade"); void s.offsetWidth; s.classList.add("fade");
+  $("q-mod").textContent = m.nome + " · " + pad2(idx+1) + " de " + m.itens.length;
+  var faltam = resp[m.id].filter(function(r){ return !r; }).length;
+  $("q-left").textContent = faltam ? (faltam + (faltam===1?" restante":" restantes")) : "bloco completo";
+  var o = $("likert").children;
+  for(var i=0;i<5;i++) o[i].setAttribute("aria-pressed", resp[m.id][idx]===(i+1)?"true":"false");
+  $("b-prev").disabled = (idx===0);
+  $("b-next").textContent = (idx===m.itens.length-1) ? "Concluir bloco →" : "Próxima →";
+  pintarProg();
+}
+function abrirModulo(id, seq){
+  modAtual = id; sequencial = !!seq;
+  var a = resp[id], p = a.indexOf(0);
+  idx = p >= 0 ? p : 0;
+  montarProg(); renderItem(); trocar("v-quiz");
+  $("mast").textContent = "respondendo";
+}
+function proximoModulo(){
+  var i = MODULOS.map(function(m){ return m.id; }).indexOf(modAtual), j;
+  for(j=i+1;j<MODULOS.length;j++) if(!completo(MODULOS[j].id)) return MODULOS[j].id;
+  for(j=0;j<MODULOS.length;j++) if(!completo(MODULOS[j].id)) return MODULOS[j].id;
+  return null;
+}
+function fimDeModulo(){
+  if(tudoCompleto()){ mostrarFim(); return; }
+  if(sequencial){
+    var p = proximoModulo();
+    if(p){ abrirModulo(p, true); toast("Bloco concluído."); return; }
+  }
+  montarMods(); trocar("v-mods");
+  $("mast").textContent = TOTAL + " afirmações";
+}
+function responder(v){
+  var m = modObj();
+  resp[m.id][idx] = v; salvar(); renderItem();
+  setTimeout(function(){
+    var a = resp[m.id], prox = -1, i;
+    for(i=idx+1;i<a.length;i++) if(!a[i]){ prox=i; break; }
+    if(prox<0) for(i=0;i<a.length;i++) if(!a[i]){ prox=i; break; }
+    if(prox<0){ fimDeModulo(); return; }
+    idx = prox; renderItem();
+  },160);
+}
+function irPara(i){ var m=modObj(); if(i<0||i>=m.itens.length) return; idx=i; renderItem(); }
+
+/* ---------- tela final ---------- */
+var PASSOS = [
+  ["Você envia o código","É só tocar em “Enviar código” e escolher por onde mandar. O código carrega todas as suas respostas."],
+  ["O relatório é montado","Quem recebeu monta o seu retrato completo: comportamento, papéis de equipe, valores, inteligências, tipo, arquétipo e traços."],
+  ["Vocês conversam","Você recebe o relatório numa conversa, com alguém lendo junto — não solto numa tela. É onde ele vira útil."],
+  ["Depois, a leitura de equipe","Se o seu grupo todo responder, há uma leitura de conjunto. Ela fala de composição, sem expor o resultado individual de ninguém."]
+];
+function mostrarFim(){
+  nomeAtual = ($("nome").value||"").trim() || nomeAtual;
+  var c = codificar(nomeAtual);
+  if(!c){ montarMods(); trocar("v-mods"); toast("Ainda falta responder alguma coisa."); return; }
+  $("fim-meta").textContent = (nomeAtual ? nomeAtual + " · " : "") +
+    new Date().toLocaleDateString("pt-BR");
+  $("fim-titulo").textContent = nomeAtual ? "Pronto, " + nomeAtual.split(" ")[0] + "." : "Pronto.";
+  $("cod").textContent = c;
+  var w = $("passos"); w.textContent = "";
+  PASSOS.forEach(function(p,i){
+    var row = el("div","passo");
+    row.appendChild(el("div","n", String(i+1)));
+    var c2 = el("div","c");
+    c2.appendChild(el("b",null,p[0]));
+    c2.appendChild(document.createTextNode(p[1]));
+    row.appendChild(c2);
+    w.appendChild(row);
+  });
+  salvar();
+  trocar("v-fim");
+  $("mast").textContent = "concluído";
+}
+
+/* ---------- retomar de um código ---------- */
+function painelRetomar(){
+  var back = el("div","modal"), box = el("div","modal-box");
+  back.appendChild(box);
+  var topo = el("div");
+  topo.style.cssText="display:flex;justify-content:space-between;align-items:baseline;gap:12px";
+  topo.appendChild(el("h3",null,"Já respondi antes"));
+  var fechar = el("button","btn-ghost","Fechar");
+  fechar.type="button"; fechar.style.cssText="padding:6px 13px;font-size:.82rem";
+  topo.appendChild(fechar); box.appendChild(topo);
+  box.appendChild(el("p","note","Se você guardou o código de uma vez anterior, cole aqui. "+
+    "As respostas voltam e você só responde o que ainda falta."));
+  var campo = document.createElement("input");
+  campo.type="text"; campo.placeholder="Cole o código, que começa com MISAPIN2.";
+  campo.setAttribute("autocomplete","off");
+  box.appendChild(campo);
+  var msg = el("p","note");
+  box.appendChild(msg);
+  var linha = el("div","btn-row");
+  var ok = el("button","btn","Recuperar respostas"); ok.type="button";
+  ok.addEventListener("click", function(){
+    var o = decodificar(campo.value);
+    if(!o){
+      msg.className = "note alert";
+      msg.textContent = motivoCodigo === "alterado"
+        ? "Este código chegou alterado: algum caractere mudou no caminho. Peça o código de novo."
+        : "Não reconheci esse código. Ele começa com MISAPIN2. e vem inteiro, sem cortes.";
+      return;
+    }
+    aplicarRespostas(o); salvar();
+    var falta = faltando();
+    if(!falta.length){
+      msg.className = "note ok";
+      msg.textContent = "Tudo recuperado. Abrindo o seu código.";
+      setTimeout(function(){ sair(); mostrarFim(); }, 600);
+      return;
+    }
+    var itens = falta.reduce(function(a,m){ return a + m.itens.length; }, 0);
+    msg.className = "note ok";
+    msg.textContent = "Recuperei " + (TOTAL - itens) + " respostas" + (o.n ? " de " + o.n : "") +
+      ". Falta " + (falta.length===1 ? "o bloco " + falta[0].nome : falta.length + " blocos") +
+      " — " + itens + (itens===1 ? " afirmação." : " afirmações.");
+    setTimeout(function(){
+      sair();
+      if(o.n) $("nome").value = o.n;
+      abrirModulo(falta[0].id, true);
+      toast("Respostas recuperadas. Faltam " + itens + ".");
+    }, 1200);
+  });
+  linha.appendChild(ok); box.appendChild(linha);
+  function sair(){ if(back.parentNode) back.parentNode.removeChild(back); document.removeEventListener("keydown",esc); }
+  function esc(e){ if(e.key==="Escape") sair(); }
+  fechar.addEventListener("click", sair);
+  back.addEventListener("click", function(e){ if(e.target===back) sair(); });
+  document.addEventListener("keydown", esc);
+  document.body.appendChild(back);
+  setTimeout(function(){ try{ campo.focus(); }catch(e){} }, 60);
+}
+
+/* ---------- arranque ---------- */
+$("n-itens").textContent = TOTAL;
+$("n-itens2").textContent = TOTAL;
+$("mast").textContent = TOTAL + " afirmações";
+montarLikert();
+(function(){
+  if(carregar()){
+    if(nomeAtual) $("nome").value = nomeAtual;
+    var fT = MODULOS.reduce(function(a,m){ return a+feitas(m.id); },0);
+    if(tudoCompleto()) $("b-start").textContent = "Ver o meu código";
+    else $("b-start").textContent = "Continuar (" + fT + " de " + TOTAL + ")";
+  }
+})();
+
+$("b-start").addEventListener("click", function(){
+  nomeAtual = ($("nome").value||"").trim() || nomeAtual;
+  if(tudoCompleto()){ mostrarFim(); return; }
+  montarMods(); trocar("v-mods");
+  $("mast").textContent = TOTAL + " afirmações";
+});
+$("b-retomar").addEventListener("click", painelRetomar);
+$("b-home").addEventListener("click", function(){ trocar("v-intro"); });
+$("b-seq").addEventListener("click", function(){
+  var p = MODULOS.filter(function(m){ return !completo(m.id); })[0];
+  if(!p){ mostrarFim(); return; }
+  abrirModulo(p.id, true);
+});
+$("b-fim").addEventListener("click", mostrarFim);
+$("b-sair").addEventListener("click", function(){
+  salvar(); montarMods(); trocar("v-mods");
+  $("mast").textContent = TOTAL + " afirmações";
+});
+$("b-prev").addEventListener("click", function(){ irPara(idx-1); });
+$("b-next").addEventListener("click", function(){
+  var m = modObj();
+  if(idx < m.itens.length-1){ irPara(idx+1); return; }
+  if(completo(m.id)) fimDeModulo();
+  else {
+    var p = resp[m.id].indexOf(0);
+    if(p>=0){ irPara(p); toast("Ainda falta a afirmação " + (p+1) + "."); }
+  }
+});
+$("b-enviar").addEventListener("click", function(){
+  entregar($("cod").textContent, "Meu código de resultado");
+});
+$("b-copiar").addEventListener("click", function(){
+  var c = $("cod").textContent;
+  var ok = function(){ toast("Código copiado."); };
+  if(navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(c).then(ok, function(){ entregar(c, "Meu código de resultado"); });
+  else entregar(c, "Meu código de resultado");
+});
+$("b-voltar").addEventListener("click", function(){
+  montarMods(); trocar("v-mods");
+  $("mast").textContent = TOTAL + " afirmações";
+});
+document.addEventListener("keydown", function(e){
+  if($("v-quiz").hidden) return;
+  var t = e.target;
+  if(t && (t.tagName==="INPUT"||t.tagName==="TEXTAREA")) return;
+  if(e.key>="1" && e.key<="5"){ e.preventDefault(); responder(parseInt(e.key,10)); return; }
+  if(e.key==="ArrowRight"){ e.preventDefault(); irPara(idx+1); return; }
+  if(e.key==="ArrowLeft"){ e.preventDefault(); irPara(idx-1); }
+});
+</script>
